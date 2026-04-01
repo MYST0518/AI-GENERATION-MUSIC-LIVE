@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="AI GENERATION MUSIC LIVE Vol.1 in GINZA - 生成AIアーティストによるライヴイベント 2026.10.10 GINZA studio RUAN">
+    <title>AI GENERATION MUSIC LIVE Vol.1 in GINZA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-grid"></div>
+        <div class="bg-particles" id="particles"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">AGM LIVE</a>
+            <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#info">INFO</a></li>
+                <li><a href="#timetable">TIMETABLE</a></li>
+                <li><a href="#recruit">募集</a></li>
+                <li><a href="#ticket">TICKET</a></li>
+                <li><a href="#food">飲食</a></li>
+                <li><a href="#notes">注意事項</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-presents">
+                    Radio Kawagoe AI Sound Cypher<br>
+                    and<br>
+                    Queen Sighs<br>
+                    <span class="presents-label">Presents</span>
+                </p>
+                <h1 class="hero-title" data-text="AI GENERATION MUSIC LIVE">
+                    <span class="title-ai">AI</span>
+                    <span class="title-generation">GENERATION</span>
+                    <span class="title-music">MUSIC LIVE</span>
+                </h1>
+                <p class="hero-vol">Vol.1 <span class="vol-in">in</span> GINZA</p>
+                <a href="https://suno.com/s/SmmrngWXtgK3mDYa" target="_blank" class="btn-hero">
+                    🎵 ザギンでフィーヴァー Ver.2を再生する
+                </a>
+                <div class="hero-info-grid">
+                    <div class="hero-info-card">
+                        <span class="info-label">DATE & TIME</span>
+                        <span class="info-value">2026.10.10</span>
+                        <span class="info-sub">13:00 open</span>
+                    </div>
+                    <div class="hero-info-card">
+                        <span class="info-label">LOCATION</span>
+                        <span class="info-value">GINZA studio RUAN</span>
+                        <span class="info-sub">中央区銀座8丁目10−2 ルアンビル 11階</span>
+                    </div>
+                    <div class="hero-info-card">
+                        <span class="info-label">CAST</span>
+                        <span class="info-value">Generative AI Artist</span>
+                        <span class="info-sub">and DJ miya</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Timetable Section -->
+    <section class="timetable" id="timetable">
+        <div class="container">
+            <h2 class="section-title">TIMETABLE</h2>
+            <div class="timetable-grid">
+                <div class="tt-item" data-time="13:00">
+                    <div class="tt-time">
+                        <span class="tt-hour">13:00</span>
+                    </div>
+                    <div class="tt-content glass">
+                        <h3>OPEN</h3>
+                        <p>会場は11階です。<br>エレベーターは1回につき6名様まででお願いします。</p>
+                    </div>
+                </div>
+                <div class="tt-item" data-time="13:30">
+                    <div class="tt-time">
+                        <span class="tt-hour">13:30</span>
+                    </div>
+                    <div class="tt-content glass">
+                        <h3>AI MUSIC PERFORMANCE</h3>
+                        <p>生成AIアーティストによるリアルタイムライヴ！<br>新しい体験を誰よりも先に！</p>
+                    </div>
+                </div>
+                <div class="tt-item" data-time="18:30">
+                    <div class="tt-time">
+                        <span class="tt-hour">18:30</span>
+                    </div>
+                    <div class="tt-content glass">
+                        <h3>miya DJ Time</h3>
+                        <p>ラジオ川越が誇るAI音楽の伝道師miyaさんによるDJタイム！</p>
+                    </div>
+                </div>
+                <div class="tt-item" data-time="19:00">
+                    <div class="tt-time">
+                        <span class="tt-hour">19:00</span>
+                    </div>
+                    <div class="tt-content glass">
+                        <h3>ENDING</h3>
+                        <p>イベント終了。ありがとうございました！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recruit Section -->
+    <section class="recruit" id="recruit">
+        <div class="container">
+            <h2 class="section-title">募集</h2>
+            <div class="recruit-grid">
+                <!-- 出演アーティスト募集 -->
+                <div class="recruit-card glass">
+                    <div class="recruit-badge">ARTIST</div>
+                    <h3>出演アーティスト募集</h3>
+                    <div class="recruit-details">
+                        <div class="detail-item">
+                            <span class="detail-label">募集定員</span>
+                            <span class="detail-value">10名（選考あり）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">持ち時間</span>
+                            <span class="detail-value">1枠30分（セッティング・撤収含む）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">参加費</span>
+                            <span class="detail-value">3,500円（出演確定者のみ）</span>
+                        </div>
+                    </div>
+                    <h4>エントリー条件</h4>
+                    <ul class="recruit-conditions">
+                        <li>生成AIで制作された楽曲であること<br>（編集・マスタリング等での外部アプリ使用可）</li>
+                        <li>映像演出・VJ素材の持ち込み歓迎</li>
+                        <li>演奏用PCは各自でご持参ください</li>
+                    </ul>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQ4nv1gIBkoUklcHd0-M5GWstRO8xQOmYLAtCjbZSHkYiLLQ/viewform?usp=sharing&ouid=108113663333971735377"
+                        target="_blank" class="btn-recruit">
+                        📝 出演者申し込みフォーム
+                    </a>
+                </div>
+
+                <!-- 観客募集 -->
+                <div class="recruit-card glass">
+                    <div class="recruit-badge audience">AUDIENCE</div>
+                    <h3>観客募集</h3>
+                    <div class="recruit-details">
+                        <div class="detail-item">
+                            <span class="detail-label">募集定員</span>
+                            <span class="detail-value">先着30名様</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">チャージ</span>
+                            <span class="detail-value">3,000円+1drink券=3,500円</span>
+                        </div>
+                        <div class="detail-item important">
+                            <span class="detail-label">決済</span>
+                            <span class="detail-value">今回全ての決済は現金のみです</span>
+                        </div>
+                    </div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc0X_4wap38uRmCmlBWRklLwKaytt5H2Ax6cERTAzmfQD6n1A/viewform?usp=sharing&ouid=108113663333971735377"
+                        target="_blank" class="btn-recruit audience">
+                        🎟️ 観覧者予約フォーム
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ticket Section -->
+    <section class="ticket" id="ticket">
+        <div class="container">
+            <h2 class="section-title">TICKET</h2>
+            <p class="section-subtitle">当日バーカウンターで現金は扱いません。<br>受付でチケットをお求めください。<br>
+                チケット使用時にお釣りは出ません。またチケットの払い戻しはできません。</p>
+            <div class="ticket-grid">
+                <div class="ticket-card glass">
+                    <div class="ticket-type">STANDARD</div>
+                    <h3>スタンダードプラン</h3>
+                    <p class="ticket-desc">チャージ3,000円+500円チケット</p>
+                    <div class="ticket-price">
+                        <span class="price-amount">¥3,500</span>
+                    </div>
+                </div>
+                <div class="ticket-card glass featured">
+                    <div class="ticket-recommend">おすすめ！</div>
+                    <div class="ticket-type">FIRST CHANCE</div>
+                    <h3>ファーストチャンスチケット</h3>
+                    <p class="ticket-desc">ご入場の際のみ購入可<br>チャージ+1drink+500円チケットx3<br>（通常5,000円分）</p>
+                    <div class="ticket-price">
+                        <span class="price-amount">¥4,500</span>
+                        <span class="price-note">500円もお得！</span>
+                    </div>
+                </div>
+                <div class="ticket-card glass">
+                    <div class="ticket-type">ADDITIONAL</div>
+                    <h3>追加飲食チケット</h3>
+                    <div class="ticket-variants">
+                        <div class="variant">
+                            <span>1,000円券</span>
+                        </div>
+                        <div class="variant">
+                            <span>500円券</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket-card glass">
+                    <div class="ticket-type">CYBER SET</div>
+                    <h3>サイバーチケットセット</h3>
+                    <p class="ticket-desc">1,000円券+500円券</p>
+                    <div class="ticket-price">
+                        <span class="price-amount">¥1,400</span>
+                    </div>
+                </div>
+                <div class="ticket-card glass">
+                    <div class="ticket-type">HYPER SET</div>
+                    <h3>ハイパーチケットセット</h3>
+                    <p class="ticket-desc">1,000円券x2</p>
+                    <div class="ticket-price">
+                        <span class="price-amount">¥1,800</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food & Drink Section -->
+    <section class="food" id="food">
+        <div class="container">
+            <h2 class="section-title">FOOD & DRINK</h2>
+            <div class="food-content glass">
+                <div class="food-icon">🍸</div>
+                <h3>サイバーなメニューをご用意</h3>
+                <p>当日はサイバーなメニューをご用意いたします。<br>
+                    銀座のラグジュアリーな空間で贅沢にお楽しみください！</p>
+                <div class="food-highlights">
+                    <span class="food-tag">🍹 AIコンセプトメニュー</span>
+                    <span class="food-tag">🥂 プレミアムドリンク</span>
+                    <span class="food-tag">✨ 限定メニュー</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notes Section -->
+    <section class="notes" id="notes">
+        <div class="container">
+            <h2 class="section-title">注意事項</h2>
+            <div class="notes-grid">
+                <!-- 出演希望者さま向け -->
+                <div class="notes-card glass">
+                    <h3>🎤 出演希望者さま</h3>
+                    <ul class="notes-list">
+                        <li>出演審査は主催とMiya氏で厳正に行わせていただきます。</li>
+                        <li>会場は12時オープンです。12:15には必ずスタジオ入りお願いします。タイムスケジュールがタイトなので<strong>遅刻厳禁</strong>です。</li>
+                        <li>エントリーフィーはお釣りのいらないようお持ちください。</li>
+                        <li>おひとりの持ち時間はセッティング・撤収込みの30分です。時間厳守でお願いします（短い分には問題ありません）。</li>
+                        <li>PCからのオーディオアウトはステレオミニ（ヘッドフォンジャック）を想定しています。それ以外（オーディオインターフェイス等）使用の方は必ず事前にお問い合わせください。</li>
+                        <li>suno等から直出しでもOKですが、事前にマスタリングされる事をおすすめします。PAアウトはクリーンで出力します。マスタリングしたものをsunoにオーディオ入力されるのがベストかと思います。ご自分でマスタリング出来ない方はご相談ください。</li>
+                        <li>ご自分で映像を用意される方はHDMI出力できるPCをお持ちください。MacでHDMIコネクタの無い方はC→HDMI変換コネクタをご用意ください。こちらでも多少のVJ映像はご用意いたします。DVD、Blu-rayでの映像の持込みは出来ません。</li>
+                        <li>スタジオ内は<strong>完全禁煙</strong>です。喫煙される場合は必ずエレベーター横のバルコニーでお願いします。</li>
+                        <li>物販（CD等）は可能ですが必ず事前にご相談ください。</li>
+                        <li>会場への飲食物の持込は禁止ですがステージドリンク1杯のみOKとします。ご飲食は会場内バーカウンターメニューをご利用ください。</li>
+                        <li>19時終演後、1時間で完全撤収となります。ご協力お願いします。</li>
+                    </ul>
+                </div>
+
+                <!-- お客さま向け -->
+                <div class="notes-card glass">
+                    <h3>🎧 お客さま</h3>
+                    <ul class="notes-list">
+                        <li><strong>今回全ての決済は現金のみ</strong>です。</li>
+                        <li>チャージ3,000円+ワンドリンク以上となります。なるべくお釣りが要らないようご協力お願いします。</li>
+                        <li>バーカウンターでは現金は一切扱いません。入場時のみご購入いただけるファーストチャンスチケットをお求めいただくか、追加チケットを受付でお求めください。</li>
+                        <li>スタジオ内は<strong>完全禁煙</strong>です。喫煙される場合は必ずエレベーター横のバルコニーでお願いします。</li>
+                        <li>演奏中の大声での会話等はご遠慮ください。</li>
+                        <li>会場への飲食物の持込は禁止です。ご飲食は会場内バーカウンターメニューをご利用ください。限定のAIコンセプトメニューや、プレミアムな飲料をご用意しています。</li>
+                        <li>途中再入場される場合は受付で再入場証をもらってください。</li>
+                        <li>終演後はすみやかなご退場をお願いいたします。</li>
+                    </ul>
+                    <div class="notes-disclaimer">
+                        <p>主催者サイドの要因による中止、および天変地異、戦争等による中止以外の払い戻しはいたしません。また予告なく出演者、イベント内容の変更がある事があります。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">CONTACT</h2>
+            <div class="contact-content glass">
+                <p>ご質問・お問い合わせはこちらからお気軽にどうぞ。</p>
+                <a href="https://docs.google.com/forms/d/1nkTYKJEtTNZuPF-lvKmq2aJUaekRXteMMUv9fxaMmq4/edit"
+                    target="_blank" class="btn-contact">
+                    📩 お問い合わせフォーム
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>AI GENERATION MUSIC LIVE</h3>
+                    <p>Vol.1 in GINZA</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">HOME</a>
+                    <a href="#timetable">TIMETABLE</a>
+                    <a href="#recruit">募集</a>
+                    <a href="#ticket">TICKET</a>
+                    <a href="#notes">注意事項</a>
+                    <a href="#contact">CONTACT</a>
+                </div>
+                <div class="footer-credit">
+                    <p>Presented by Radio Kawagoe AI Sound Cypher & Queen Sighs</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI GENERATION MUSIC LIVE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
