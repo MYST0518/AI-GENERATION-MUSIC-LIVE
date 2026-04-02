@@ -393,6 +393,25 @@ section {
     color: var(--text-secondary);
 }
 
+.hero-info-card--link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hero-info-card--link:hover .info-map-link {
+    color: var(--accent-red);
+    transform: translateX(3px);
+}
+
+.info-map-link {
+    font-size: 0.8rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+    margin-top: 0.4rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
 .scroll-indicator {
     position: absolute;
     bottom: 2rem;
