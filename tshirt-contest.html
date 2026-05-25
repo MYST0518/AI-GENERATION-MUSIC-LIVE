@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="ライブTシャツデザインコンテスト - AI GENERATION MUSIC LIVE Vol.1 in GINZA. あなたのデザインがオフィシャルTシャツに！">
+    <title>ライブTシャツデザインコンテスト | AI GENERATION MUSIC LIVE</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    
+    <style>
+        /* Special styles for T-shirt Contest Page */
+        .contest-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .contest-header {
+            margin-bottom: 3rem;
+        }
+
+        .update-badge {
+            display: inline-block;
+            padding: 0.35rem 1rem;
+            background: rgba(255, 45, 85, 0.15);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px var(--accent-red-glow);
+            letter-spacing: 0.05em;
+        }
+
+        .contest-title-glowing {
+            font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, var(--accent-cyan), #ffffff, var(--accent-pink));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: presentsShimmer 4s ease infinite;
+            filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.3));
+            margin-bottom: 1rem;
+        }
+
+        .contest-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--accent-gold);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        /* Countdown Lock Screen */
+        .lock-container {
+            max-width: 700px;
+            margin: 2rem auto;
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: var(--radius-lg);
+            background: rgba(10, 10, 26, 0.65);
+            box-shadow: 0 0 40px rgba(255, 45, 85, 0.1);
+            border: 1px solid rgba(255, 45, 85, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .lock-icon {
+            font-size: 3rem;
+            color: var(--accent-red);
+            filter: drop-shadow(0 0 15px var(--accent-red-glow));
+            margin-bottom: 1.5rem;
+            animation: lockPulse 2s infinite alternate;
+        }
+
+        @keyframes lockPulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--accent-red-glow)); }
+            100% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(255, 45, 85, 0.7)); }
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 480px;
+            margin: 2rem auto 2.5rem;
+        }
+
+        .countdown-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 1rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 12px var(--accent-cyan-glow);
+        }
+
+        .countdown-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            margin-top: 0.3rem;
+        }
+
+        /* Teaser Character section */
+        .teaser-characters {
+            margin-top: 3rem;
+        }
+
+        .teaser-title {
+            font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .teaser-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1.5rem;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .teaser-thumb {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .teaser-img-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+            margin-bottom: 0.75rem;
+            background: #0f0f23;
+        }
+
+        .teaser-img-wrapper.rabbit {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px var(--accent-cyan-glow);
+        }
+
+        .teaser-img-wrapper.girl {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 15px rgba(255, 110, 199, 0.4);
+        }
+
+        .teaser-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(4px) brightness(0.7); /* Blur before release */
+            transition: all 0.5s ease;
+        }
+
+        .unlocked .teaser-img {
+            filter: none;
+        }
+
+        .teaser-name {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Unlocked Content Styles */
+        .content-unlocked-section {
+            display: none; /* Controlled via JS */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-unlocked-section.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Characters Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .showcase-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .showcase-img-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #0d0d22;
+        }
+
+        .showcase-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .showcase-card:hover .showcase-img {
+            transform: scale(1.04);
+        }
+
+        .showcase-desc-bar {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .showcase-char-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .showcase-char-role {
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 0.2rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* T-shirt Sample Display */
+        .sample-section {
+            margin-bottom: 4rem;
+        }
+
+        .sample-card {
+            max-width: 850px;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .sample-img-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #0f0f2b;
+            position: relative;
+        }
+
+        .sample-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .sample-card:hover .sample-img {
+            transform: scale(1.02);
+        }
+
+        .sample-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            text-align: center;
+        }
+
+        /* Guidelines Styled Details */
+        .guidelines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .guideline-item-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .guideline-item-card:hover {
+            border-color: rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .guideline-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.4));
+        }
+
+        .guideline-info h4 {
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .guideline-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .guideline-list {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .guideline-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .guideline-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-pink);
+            font-weight: 700;
+        }
+
+        /* Schedule Timeline */
+        .timeline-container {
+            margin-bottom: 4rem;
+        }
+
+        .timeline-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-steps {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .timeline-steps::before {
+                display: none;
+            }
+        }
+
+        .timeline-steps::before {
+            content: "";
+            position: absolute;
+            top: 2rem;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+            z-index: 0;
+        }
+
+        .timeline-step-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-step-card:hover {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 25px rgba(255, 110, 199, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .step-badge {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 15px var(--accent-cyan-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -3.5rem auto 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .timeline-step-card:nth-child(2) .step-badge {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 15px var(--accent-purple-glow);
+            color: var(--accent-purple);
+        }
+
+        .timeline-step-card:nth-child(3) .step-badge {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 15px rgba(255, 110, 199, 0.4);
+            color: var(--accent-pink);
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .step-date {
+            font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Action/Submission Section */
+        .submit-section {
+            max-width: 650px;
+            margin: 4rem auto 2rem;
+            text-align: center;
+        }
+
+        .submit-card {
+            padding: 3rem 2rem;
+            border: 2px solid var(--glass-border);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 35px var(--accent-cyan-glow);
+        }
+
+        .submit-card:hover {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 45px rgba(255, 110, 199, 0.3);
+        }
+
+        .submit-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .submit-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .btn-submit-form {
+            display: inline-block;
+            padding: 1.1rem 3rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px var(--accent-cyan-glow);
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-submit-form:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(0, 243, 255, 0.6);
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+        }
+
+        .btn-submit-form.preparing {
+            background: #222;
+            border: 1px solid #444;
+            color: #666;
+            box-shadow: none;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .submit-subinfo {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .submit-subinfo a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .submit-subinfo a:hover {
+            color: var(--accent-pink);
+            text-decoration: underline;
+        }
+
+        /* Back to Home Button */
+        .back-nav-container {
+            text-align: center;
+            margin: 4rem 0 2rem;
+        }
+
+        .btn-back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-back-home:hover {
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            background: rgba(0, 243, 255, 0.05);
+            transform: translateX(-4px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-grid"></div>
+        <div class="bg-particles" id="particles"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">AGM LIVE</a>
+            <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#home">HOME</a></li>
+                <li><a href="index.html#info">INFO</a></li>
+                <li><a href="index.html#timetable">TIMETABLE</a></li>
+                <li><a href="index.html#recruit">募集</a></li>
+                <li><a href="index.html#ticket">TICKET</a></li>
+                <li><a href="index.html#notes">注意事項</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contest Landing Page -->
+    <main class="container">
+        
+        <!-- Locked/Teaser View -->
+        <section class="contest-hero" id="locked-view">
+            <div class="lock-container">
+                <div class="lock-icon">🔒</div>
+                <div class="update-badge">5月28日(木) 21:00 公開予定</div>
+                <h1 class="contest-title-glowing">T-SHIRT CONTEST</h1>
+                <p class="contest-subtitle">ライブTシャツデザインコンテスト</p>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">特別ページの公開までしばらくお待ちください！</p>
+                
+                <!-- Countdown Clock -->
+                <div class="countdown-grid">
+                    <div class="countdown-card">
+                        <span class="countdown-num" id="days">00</span>
+                        <span class="countdown-label">DAYS</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-num" id="hours">00</span>
+                        <span class="countdown-label">HOURS</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-num" id="minutes">00</span>
+                        <span class="countdown-label">MINUTES</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-num" id="seconds">00</span>
+                        <span class="countdown-label">SECONDS</span>
+                    </div>
+                </div>
+
+                <!-- Teaser Section -->
+                <div class="teaser-characters">
+                    <h3 class="teaser-title">— CHARACTER TEASER —</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                        公式キャラクター「レインボーバニー」＆「レインボーガール」公開中！
+                    </p>
+                    <div class="teaser-grid">
+                        <div class="teaser-thumb">
+                            <div class="teaser-img-wrapper rabbit">
+                                <img src="contest-rabbit.jpg" class="teaser-img" alt="レインボーバニー">
+                            </div>
+                            <span class="teaser-name">レインボーバニー</span>
+                        </div>
+                        <div class="teaser-thumb">
+                            <div class="teaser-img-wrapper girl">
+                                <img src="contest-girl.jpg" class="teaser-img" alt="レインボーガール">
+                            </div>
+                            <span class="teaser-name">レインボーガール</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="back-nav-container">
+                <a href="index.html" class="btn-back-home">← イベントトップに戻る</a>
+            </div>
+        </section>
+
+        <!-- Unlocked View -->
+        <section class="contest-hero content-unlocked-section" id="unlocked-view">
+            <div class="contest-header">
+                <div class="update-badge">5月28日(木) 21:00 更新</div>
+                <h1 class="contest-title-glowing">T-SHIRT DESIGN CONTEST</h1>
+                <p class="contest-subtitle">ライブTシャツ デザインコンテスト</p>
+                <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto; line-height: 1.8;">
+                    『AI GENERATION MUSIC LIVE Vol.1 in GINZA』開催を記念して、オフィシャルTシャツのデザインコンテストを開催します！<br>
+                    あなたのデザインがオフィシャルグッズとして商品化！さらに上位3作品に選ばれた方には豪華特典も！たくさんのご応募をお待ちしております。
+                </p>
+            </div>
+
+            <!-- Mascot Showcase -->
+            <h2 class="section-title" style="margin-top: 5rem; margin-bottom: 2rem;">OFFICIAL MASCOTS</h2>
+            <p class="section-subtitle">デザインに自由に取り入れられる公式キャラクターたちです。</p>
+            <div class="showcase-grid">
+                <!-- Mascot 1: Rabbit -->
+                <div class="showcase-card glass">
+                    <div class="showcase-img-container">
+                        <img src="contest-rabbit.jpg" class="showcase-img" alt="レインボーバニー">
+                    </div>
+                    <div class="showcase-desc-bar">
+                        <div class="showcase-char-name">レインボーバニー</div>
+                        <div class="showcase-char-role">Official Mascot</div>
+                    </div>
+                </div>
+
+                <!-- Mascot 2: Girl -->
+                <div class="showcase-card glass">
+                    <div class="showcase-img-container">
+                        <img src="contest-girl.jpg" class="showcase-img" alt="レインボーガール">
+                    </div>
+                    <div class="showcase-desc-bar">
+                        <div class="showcase-char-name">レインボーガール</div>
+                        <div class="showcase-char-role">Official Character</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- T-Shirt Mockup -->
+            <div class="sample-section">
+                <h2 class="section-title">OFFICIAL T-SHIRT IMAGE</h2>
+                <p class="section-subtitle">オフィシャルTシャツの完成イメージです。</p>
+                <div class="sample-card glass">
+                    <div class="sample-img-container">
+                        <img src="contest-tshirt.jpg" class="sample-img" alt="Tシャツ着用イメージ">
+                    </div>
+                </div>
+                <p class="sample-note">※デザインの配置やボディサイズはイメージです。実際とは異なる場合があります。</p>
+            </div>
+
+            <!-- Guidelines Grid -->
+            <h2 class="section-title" style="margin-top: 5rem;">APPLICATION GUIDELINES</h2>
+            <p class="section-subtitle">応募要項をご確認のうえ、デザインを作成してください。</p>
+            <div class="guidelines-grid">
+                
+                <div class="guideline-item-card">
+                    <div class="guideline-icon">🎨</div>
+                    <div class="guideline-info">
+                        <h4>Tシャツ仕様</h4>
+                        <ul class="guideline-list">
+                            <li><strong>Tシャツの色</strong>: 白 または 黒</li>
+                            <li><strong>プリント場所</strong>: 表面 または 背面（どちらか一方のみ）</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guideline-item-card">
+                    <div class="guideline-icon">📐</div>
+                    <div class="guideline-info">
+                        <h4>デザイン規定</h4>
+                        <ul class="guideline-list">
+                            <li><strong>デザインサイズ</strong>: アスペクト比 3:4 以内（縦長デザインのみ）</li>
+                            <li><strong>線の太さ</strong>: 2pt以上推奨</li>
+                            <li>手描き・デジタルどちらでも可</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guideline-item-card">
+                    <div class="guideline-icon">✍️</div>
+                    <div class="guideline-info">
+                        <h4>応募条件 & 記載項目</h4>
+                        <ul class="guideline-list">
+                            <li>応募者オリジナルの作品に限ります。</li>
+                            <li>作者名（ペンネーム・SNSハンドルネーム可）をデザインの<strong>右下に小さく記載</strong>してください。</li>
+                            <li>応募はお一人につき<strong>1点まで</strong>となります。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guideline-item-card">
+                    <div class="guideline-icon">🏆</div>
+                    <div class="guideline-info">
+                        <h4>採用数 & 特典</h4>
+                        <p><strong>採用数：3デザイン</strong></p>
+                        <ul class="guideline-list" style="margin-top: 0.25rem;">
+                            <li>応募作品の中から上位3作品を<strong>一般投票にて決定</strong>し、公式オフィシャルTシャツとして正式採用！</li>
+                            <li>採用されたクリエイターの皆様には、<strong>完成したご自身のデザインTシャツを1枚プレゼント</strong>いたします！</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guideline-item-card">
+                    <div class="guideline-icon">📦</div>
+                    <div class="guideline-info">
+                        <h4>Tシャツの販売方法</h4>
+                        <p>完成したTシャツは<strong>完全受注生産</strong>にて販売いたします。</p>
+                        <ul class="guideline-list" style="margin-top: 0.25rem;">
+                            <li>ライブ来場者：イベント会場にて直接受取り可能</li>
+                            <li>ご来場できない方：オンライン通販にて発送可能（※送料は別途発生いたします）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Timeline -->
+            <div class="timeline-container">
+                <h2 class="section-title">CONTEST SCHEDULE</h2>
+                <p class="section-subtitle">コンテストのスケジュール日程です。</p>
+                <div class="timeline-steps">
+                    
+                    <div class="timeline-step-card">
+                        <div class="step-badge">01</div>
+                        <h4 class="step-title">応募締切</h4>
+                        <div class="step-date">2026.7.12<span>(日)</span></div>
+                        <div class="step-time">23:59 まで</div>
+                    </div>
+
+                    <div class="timeline-step-card">
+                        <div class="step-badge">02</div>
+                        <h4 class="step-title">投票期間</h4>
+                        <div class="step-date">7.15<span>(火)</span> 〜 7.31<span>(木)</span></div>
+                        <div class="step-time">一般ウェブ投票にて決定</div>
+                    </div>
+
+                    <div class="timeline-step-card">
+                        <div class="step-badge">03</div>
+                        <h4 class="step-title">結果発表</h4>
+                        <div class="step-date">2026.8.7<span>(金)</span></div>
+                        <div class="step-time">ホームページ・公式Xにて公開</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Form -->
+            <div class="submit-section">
+                <div class="submit-card glass">
+                    <h3>SUBMIT YOUR DESIGN</h3>
+                    <p>
+                        現在、応募フォームを準備中です。応募開始まで今しばらくお待ちください。<br>
+                        先行して公式X（旧Twitter）アカウントのダイレクトメッセージ（DM）でもデザインのご応募・受付を行っております。
+                    </p>
+                    <a href="#" class="btn-submit-form preparing">準備中 (後日公開)</a>
+                    <div class="submit-subinfo">
+                        お送りいただく情報や不明点のお問い合わせにつきましては、<br>
+                        <strong>公式Xアカウント（<a href="https://x.com/AGML_official" target="_blank">@AGML_official</a>）のDM</strong>までお気軽にご連絡ください！
+                    </div>
+                </div>
+            </div>
+
+            <div class="back-nav-container">
+                <a href="index.html" class="btn-back-home">← イベントトップに戻る</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 5rem;">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>AI GENERATION MUSIC LIVE</h3>
+                    <p>Vol.1 in GINZA</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html#home">HOME</a>
+                    <a href="index.html#info">INFO</a>
+                    <a href="index.html#timetable">TIMETABLE</a>
+                    <a href="index.html#recruit">募集</a>
+                    <a href="index.html#notes">注意事項</a>
+                </div>
+                <div class="footer-credit">
+                    <p>Presented by Radio Kawagoe AI Sound Cypher & Queen Sighs</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI GENERATION MUSIC LIVE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Countdown & Unlock Timer Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Target release JST: 2026-05-28 21:00:00 JST (GMT+0900)
+            const targetReleaseTime = new Date('2026-05-28T21:00:00+09:00').getTime();
+            
+            const lockedView = document.getElementById('locked-view');
+            const unlockedView = document.getElementById('unlocked-view');
+            
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+
+            // Check if preview mode is requested via URL query string (?preview=true or ?test=true)
+            const urlParams = new URLSearchParams(window.location.search);
+            const isPreview = urlParams.get('preview') === 'true' || urlParams.get('test') === 'true';
+
+            function updateTimer() {
+                const now = Date.now();
+                const timeRemaining = targetReleaseTime - now;
+
+                if (isPreview || timeRemaining <= 0) {
+                    // Unlock page
+                    lockedView.style.display = 'none';
+                    unlockedView.classList.add('show');
+                    
+                    // Unblur teaser images
+                    document.querySelectorAll('.teaser-img').forEach(img => {
+                        img.style.filter = 'none';
+                    });
+                    
+                    clearInterval(timerInterval);
+                    return;
+                }
+
+                // Calculate time units
+                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                // Format with leading zeros
+                daysEl.textContent = String(days).padStart(2, '0');
+                hoursEl.textContent = String(hours).padStart(2, '0');
+                minutesEl.textContent = String(minutes).padStart(2, '0');
+                secondsEl.textContent = String(seconds).padStart(2, '0');
+            }
+
+            // Start countdown polling
+            const timerInterval = setInterval(updateTimer, 1000);
+            updateTimer(); // Initial call
+        });
+
+        // Toggle navigation menu on mobile
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+            
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                });
+            });
+        }
+    </script>
+    
+    <!-- Particles creation script -->
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${Math.random() * 3 + 1}px;
+                    height: ${Math.random() * 3 + 1}px;
+                    background: ${['rgba(255,45,85,0.4)', 'rgba(0,243,255,0.4)', 'rgba(176,37,255,0.4)', 'rgba(255,215,0,0.3)'][Math.floor(Math.random() * 4)]};
+                    border-radius: 50%;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    animation: particleDrift ${Math.random() * 20 + 15}s linear infinite;
+                    opacity: ${Math.random() * 0.6 + 0.2};
+                    pointer-events: none;
+                `;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+    </script>
+</body>
+
+</html>
