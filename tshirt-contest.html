@@ -595,14 +595,53 @@
             border-radius: var(--radius-lg);
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(10, 10, 26, 0.98);
+            padding: 1.5rem 1.5rem 3.5rem 1.5rem; /* bottom padding accounts for title */
+        }
+
+        .lightbox-tabs {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            z-index: 10;
+        }
+
+        .lightbox-tab {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-secondary);
+            padding: 0.4rem 1.1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .lightbox-tab:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: var(--text-primary);
+        }
+
+        .lightbox-tab.active {
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
         }
 
         .lightbox-inner img.lightbox-img {
-            max-width: 90vw;
-            max-height: 88vh;
+            max-width: 85vw;
+            max-height: 68vh;
             object-fit: contain;
             display: block;
             border-radius: var(--radius-md);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
         }
 
         .lightbox-close {
@@ -840,8 +879,12 @@
 
     <!-- Lightbox -->
     <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
-        <div class="lightbox-inner" id="lightboxInner">
+        <div class="lightbox-inner" id="lightboxInner" onclick="event.stopPropagation()">
             <button class="lightbox-close" onclick="closeLightbox(null, true)">✕</button>
+            <div class="lightbox-tabs" id="lightboxTabs">
+                <button class="lightbox-tab active" id="tabTshirt" onclick="switchLightboxImage('tshirt')">👕 着用イメージ</button>
+                <button class="lightbox-tab" id="tabRaw" onclick="switchLightboxImage('raw')">🎨 デザイン画</button>
+            </div>
             <img id="lightboxImg" src="" alt="" class="lightbox-img" style="transition: opacity 0.3s;">
             <div class="lightbox-title" id="lightboxTitle"></div>
         </div>
@@ -999,6 +1042,9 @@
             return `https://drive.google.com/file/d/${fileId}/view`;
         }
 
+        let activeTshirtUrl = '';
+        let activeRawUrl = '';
+
         function renderCards() {
             const grid = document.getElementById('tshirtGrid');
             const folderUrl = 'https://drive.google.com/drive/folders/100fa8Iy05OMHiWSHznRkDLHdG9Icqxbb?usp=drive_link';
@@ -1012,7 +1058,6 @@
                 // カードのサムネ：Tシャツプレビュー、クリック拡大用は高解像度
                 const thumbUrl  = hasId ? buildDriveImgUrl(entry.driveFileTshirtId || entry.driveFileId, 600) : null;
                 const largeUrl  = hasId ? buildDriveImgUrl(entry.driveFileTshirtId || entry.driveFileId, 1600) : null;
-                const viewUrl   = hasId ? buildDriveViewUrl(entry.driveFileId) : folderUrl;
 
                 card.innerHTML = `
                     <div class="entry-badge">No.${entry.num}</div>
@@ -1038,11 +1083,7 @@
                     <div class="card-footer">
                         <span class="card-title">${entry.title}</span>
                         <div class="card-actions">
-                            ${entry.driveFileRawId
-                                ? `<a href="${buildDriveViewUrl(entry.driveFileRawId)}" target="_blank" rel="noopener" class="btn-card-view">🖼️ 実画像</a>`
-                                : ''
-                            }
-                            <a href="${viewUrl}" target="_blank" rel="noopener" class="btn-card-view">🔍 Drive</a>
+                            <button class="btn-card-view btn-expand" style="cursor: pointer;">🔍 拡大・詳細</button>
                         </div>
                     </div>
                 `;
@@ -1060,9 +1101,18 @@
                     if (img.complete) onLoad();
                     else img.addEventListener('load', onLoad);
 
+                    const tshirtUrl = largeUrl;
+                    const rawUrl = entry.driveFileRawId ? buildDriveImgUrl(entry.driveFileRawId, 1600) : null;
+
                     // クリックでライトボックスを開く
                     wrap.addEventListener('click', () => {
-                        openLightbox(img.dataset.large, img.dataset.title);
+                        openLightbox(tshirtUrl, rawUrl, entry.title);
+                    });
+
+                    const btnExpand = card.querySelector('.btn-expand');
+                    btnExpand.addEventListener('click', (e) => {
+                        e.stopPropagation(); // カード画像へのイベント重複発火を防止
+                        openLightbox(tshirtUrl, rawUrl, entry.title);
                     });
                 }
 
@@ -1071,18 +1121,55 @@
         }
 
         // ===== LIGHTBOX =====
-        function openLightbox(url, title) {
+        function openLightbox(tshirtUrl, rawUrl, title) {
             const lb   = document.getElementById('lightbox');
             const lbImg  = document.getElementById('lightboxImg');
             const lbTitle = document.getElementById('lightboxTitle');
+            const tabs = document.getElementById('lightboxTabs');
+
+            activeTshirtUrl = tshirtUrl;
+            activeRawUrl = rawUrl;
+
+            // 実画像（Raw）がない場合はタブを非表示にし、あれば表示
+            if (!rawUrl) {
+                tabs.style.display = 'none';
+            } else {
+                tabs.style.display = 'flex';
+                // タブ表示状態をリセット
+                document.getElementById('tabTshirt').classList.add('active');
+                document.getElementById('tabRaw').classList.remove('active');
+            }
+
             lbImg.src = '';
             lbImg.style.opacity = '0';
             lbTitle.textContent = title;
             lb.classList.add('open');
             document.body.style.overflow = 'hidden';
+            
             // 画像ロード後にフェードイン
             lbImg.onload = () => { lbImg.style.opacity = '1'; };
-            lbImg.src = url;
+            lbImg.src = tshirtUrl;
+        }
+
+        function switchLightboxImage(type) {
+            const lbImg = document.getElementById('lightboxImg');
+            const tabTshirt = document.getElementById('tabTshirt');
+            const tabRaw = document.getElementById('tabRaw');
+
+            lbImg.style.opacity = '0';
+
+            // フェードアウトのタイミングを少し待ってsrcを切り替える
+            setTimeout(() => {
+                if (type === 'tshirt') {
+                    tabTshirt.classList.add('active');
+                    tabRaw.classList.remove('active');
+                    lbImg.src = activeTshirtUrl;
+                } else if (type === 'raw') {
+                    tabTshirt.classList.remove('active');
+                    tabRaw.classList.add('active');
+                    lbImg.src = activeRawUrl;
+                }
+            }, 150);
         }
 
         function closeLightbox(event, force) {
