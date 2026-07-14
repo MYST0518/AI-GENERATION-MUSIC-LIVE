@@ -344,13 +344,42 @@
             overflow: hidden;
         }
 
-        /* Google Drive thumbnail embed */
-        .card-image-wrap iframe {
+        /* Direct image display */
+        .card-image-wrap img.card-thumb {
             width: 100%;
             height: 100%;
-            border: none;
-            pointer-events: none;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+            opacity: 0;
         }
+
+        .card-image-wrap img.card-thumb.loaded {
+            opacity: 1;
+        }
+
+        .tshirt-card:hover .card-thumb {
+            transform: scale(1.04);
+        }
+
+        /* Skeleton loading animation */
+        .img-skeleton {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                rgba(255,255,255,0.04) 25%,
+                rgba(255,255,255,0.09) 50%,
+                rgba(255,255,255,0.04) 75%);
+            background-size: 200% 100%;
+            animation: skeletonShimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes skeletonShimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .img-skeleton.hidden { display: none; }
 
         .card-img-placeholder {
             width: 100%;
@@ -568,13 +597,12 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .lightbox-inner iframe {
-            width: 80vw;
-            height: 80vh;
-            max-width: 800px;
-            max-height: 800px;
-            border: none;
+        .lightbox-inner img.lightbox-img {
+            max-width: 90vw;
+            max-height: 88vh;
+            object-fit: contain;
             display: block;
+            border-radius: var(--radius-md);
         }
 
         .lightbox-close {
@@ -811,7 +839,7 @@
     <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
         <div class="lightbox-inner" id="lightboxInner">
             <button class="lightbox-close" onclick="closeLightbox(null, true)">✕</button>
-            <iframe id="lightboxFrame" src="" allowfullscreen></iframe>
+            <img id="lightboxImg" src="" alt="" class="lightbox-img" style="transition: opacity 0.3s;">
             <div class="lightbox-title" id="lightboxTitle"></div>
         </div>
     </div>
@@ -958,8 +986,10 @@
             },
         ];
 
-        function buildDriveEmbedUrl(fileId) {
-            return `https://drive.google.com/file/d/${fileId}/preview`;
+        // Google Drive直接画像URL（iframeより大幅に高速）
+        function buildDriveImgUrl(fileId, size) {
+            // lh3.googleusercontent.com 経由で直接画像を取得
+            return `https://lh3.googleusercontent.com/d/${fileId}=s${size || 600}`;
         }
 
         function buildDriveViewUrl(fileId) {
@@ -976,24 +1006,31 @@
                 card.setAttribute('data-index', i);
 
                 const hasId = entry.driveFileId;
-                const embedUrl = hasId ? buildDriveEmbedUrl(entry.driveFileId) : null;
-                const viewUrl = hasId ? buildDriveViewUrl(entry.driveFileId) : folderUrl;
-
-                // Tシャツプレビュー用と実画像用のURLを分ける（_T と 実画像）
-                const tshirtPreviewUrl = entry.driveFileTshirtId
-                    ? buildDriveEmbedUrl(entry.driveFileTshirtId)
-                    : embedUrl;
+                // カードのサムネ：Tシャツプレビュー、クリック拡大用は高解像度
+                const thumbUrl  = hasId ? buildDriveImgUrl(entry.driveFileTshirtId || entry.driveFileId, 600) : null;
+                const largeUrl  = hasId ? buildDriveImgUrl(entry.driveFileTshirtId || entry.driveFileId, 1600) : null;
+                const viewUrl   = hasId ? buildDriveViewUrl(entry.driveFileId) : folderUrl;
 
                 card.innerHTML = `
                     <div class="entry-badge">No.${entry.num}</div>
                     <div class="card-image-wrap" id="img-wrap-${i}">
-                        ${hasId
-                            ? `<iframe src="${tshirtPreviewUrl || embedUrl}" title="${entry.title} Tシャツプレビュー" loading="lazy"></iframe>`
-                            : `<div class="card-img-placeholder">
+                        ${ hasId ? `
+                            <div class="img-skeleton" id="skel-${i}"></div>
+                            <img
+                                class="card-thumb"
+                                src="${thumbUrl}"
+                                alt="${entry.title} Tシャツプレビュー"
+                                loading="lazy"
+                                decoding="async"
+                                data-large="${largeUrl}"
+                                data-title="${entry.title}"
+                            >
+                        ` : `
+                            <div class="card-img-placeholder">
                                 <span class="card-img-placeholder-icon">👕</span>
                                 <span class="card-img-placeholder-text">No.${entry.num}</span>
-                               </div>`
-                        }
+                            </div>
+                        `}
                     </div>
                     <div class="card-footer">
                         <span class="card-title">${entry.title}</span>
@@ -1002,14 +1039,27 @@
                                 ? `<a href="${buildDriveViewUrl(entry.driveFileRawId)}" target="_blank" rel="noopener" class="btn-card-view">🖼️ 実画像</a>`
                                 : ''
                             }
-                            <a href="${viewUrl}" target="_blank" rel="noopener" class="btn-card-view">🔍 拡大</a>
+                            <a href="${viewUrl}" target="_blank" rel="noopener" class="btn-card-view">🔍 Drive</a>
                         </div>
                     </div>
                 `;
 
+                // 画像ロード完了 → スケルトン非表示 + フェードイン
                 if (hasId) {
-                    card.querySelector('.card-image-wrap').addEventListener('click', () => {
-                        openLightbox(tshirtPreviewUrl || embedUrl, entry.title);
+                    const img  = card.querySelector('.card-thumb');
+                    const skel = card.querySelector('.img-skeleton');
+                    const wrap = card.querySelector('.card-image-wrap');
+
+                    const onLoad = () => {
+                        img.classList.add('loaded');
+                        if (skel) skel.classList.add('hidden');
+                    };
+                    if (img.complete) onLoad();
+                    else img.addEventListener('load', onLoad);
+
+                    // クリックでライトボックスを開く
+                    wrap.addEventListener('click', () => {
+                        openLightbox(img.dataset.large, img.dataset.title);
                     });
                 }
 
@@ -1019,16 +1069,23 @@
 
         // ===== LIGHTBOX =====
         function openLightbox(url, title) {
-            document.getElementById('lightboxFrame').src = url;
-            document.getElementById('lightboxTitle').textContent = title;
-            document.getElementById('lightbox').classList.add('open');
+            const lb   = document.getElementById('lightbox');
+            const lbImg  = document.getElementById('lightboxImg');
+            const lbTitle = document.getElementById('lightboxTitle');
+            lbImg.src = '';
+            lbImg.style.opacity = '0';
+            lbTitle.textContent = title;
+            lb.classList.add('open');
             document.body.style.overflow = 'hidden';
+            // 画像ロード後にフェードイン
+            lbImg.onload = () => { lbImg.style.opacity = '1'; };
+            lbImg.src = url;
         }
 
         function closeLightbox(event, force) {
             if (force || (event && event.target === document.getElementById('lightbox'))) {
                 document.getElementById('lightbox').classList.remove('open');
-                document.getElementById('lightboxFrame').src = '';
+                document.getElementById('lightboxImg').src = '';
                 document.body.style.overflow = '';
             }
         }
