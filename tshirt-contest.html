@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="ライブTシャツデザインコンテスト - AI GENERATION MUSIC LIVE Vol.1 in GINZA. あなたのデザインがオフィシャルTシャツに！">
-    <title>ライブTシャツデザインコンテスト | AI GENERATION MUSIC LIVE</title>
+        content="ライブTシャツデザインコンテスト 投票フェーズ - AI GENERATION MUSIC LIVE Vol.1 in GINZA. 14作品から最大3つを投票してください！">
+    <title>Tシャツデザイン投票 | AI GENERATION MUSIC LIVE</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,575 +14,632 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    
+
     <style>
-        /* Special styles for T-shirt Contest Page */
+        /* ===== VOTING PHASE STYLES ===== */
+
         .contest-hero {
-            padding: 8rem 0 4rem;
+            padding: 8rem 0 3rem;
             text-align: center;
+            position: relative;
         }
 
-        .contest-header {
-            margin-bottom: 3rem;
-        }
-
-        .update-badge {
-            display: inline-block;
-            padding: 0.35rem 1rem;
-            background: rgba(255, 45, 85, 0.15);
-            border: 1px solid var(--accent-red);
-            color: var(--accent-red);
-            font-size: 0.8rem;
-            font-weight: 700;
-            border-radius: 20px;
+        /* Phase Badge */
+        .phase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1.2rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 110, 199, 0.15));
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+            font-weight: 800;
+            border-radius: 30px;
             margin-bottom: 1.5rem;
-            text-shadow: 0 0 10px var(--accent-red-glow);
-            letter-spacing: 0.05em;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            animation: phasePulse 2s ease-in-out infinite;
+        }
+
+        .phase-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            animation: dotBlink 1s ease-in-out infinite;
+            box-shadow: 0 0 8px var(--accent-gold);
+        }
+
+        @keyframes phasePulse {
+            0%, 100% { box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.25); }
+        }
+
+        @keyframes dotBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         .contest-title-glowing {
             font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
-            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
             font-weight: 900;
             line-height: 1.2;
-            letter-spacing: 0.05em;
-            background: linear-gradient(135deg, var(--accent-cyan), #ffffff, var(--accent-pink));
+            letter-spacing: 0.03em;
+            background: linear-gradient(135deg, var(--accent-gold), #ffffff, var(--accent-pink));
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: presentsShimmer 4s ease infinite;
-            filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.3));
-            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+            margin-bottom: 0.75rem;
         }
 
         .contest-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
-            color: var(--accent-gold);
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            margin-bottom: 2rem;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
         }
 
-        /* Countdown Lock Screen */
-        .lock-container {
-            max-width: 700px;
+        /* ===== VOTING DEADLINE COUNTDOWN ===== */
+        .deadline-section {
+            max-width: 580px;
             margin: 2rem auto;
             text-align: center;
-            padding: 3rem 2rem;
-            border-radius: var(--radius-lg);
-            background: rgba(10, 10, 26, 0.65);
-            box-shadow: 0 0 40px rgba(255, 45, 85, 0.1);
-            border: 1px solid rgba(255, 45, 85, 0.2);
-            backdrop-filter: blur(20px);
         }
 
-        .lock-icon {
-            font-size: 3rem;
-            color: var(--accent-red);
-            filter: drop-shadow(0 0 15px var(--accent-red-glow));
-            margin-bottom: 1.5rem;
-            animation: lockPulse 2s infinite alternate;
-        }
-
-        @keyframes lockPulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--accent-red-glow)); }
-            100% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(255, 45, 85, 0.7)); }
+        .deadline-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
 
         .countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: flex;
+            justify-content: center;
             gap: 1rem;
-            max-width: 480px;
-            margin: 2rem auto 2.5rem;
         }
 
         .countdown-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: var(--radius-md);
-            padding: 1rem 0.5rem;
+            padding: 1rem 1.25rem;
+            min-width: 72px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: border-color 0.3s;
+        }
+
+        .countdown-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
         }
 
         .countdown-num {
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 800;
-            color: var(--accent-cyan);
-            text-shadow: 0 0 12px var(--accent-cyan-glow);
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            line-height: 1;
         }
 
-        .countdown-label {
+        .countdown-lbl {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            margin-top: 0.4rem;
+            text-transform: uppercase;
+        }
+
+        .countdown-expired {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-red);
+            font-size: 1.2rem;
+            padding: 1rem;
+        }
+
+        /* ===== MAIN CTA VOTE BUTTON ===== */
+        .vote-cta-section {
+            margin: 2.5rem auto 0;
+            text-align: center;
+        }
+
+        .btn-vote-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.1rem 2.5rem;
+            background: linear-gradient(135deg, #ff6ec7, #b025ff, #00f3ff);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 6px 30px rgba(176, 37, 255, 0.4);
+        }
+
+        .btn-vote-main:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(176, 37, 255, 0.6);
+        }
+
+        .btn-vote-main .vote-icon {
+            font-size: 1.3rem;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .vote-note {
+            margin-top: 0.75rem;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== INFO CARDS ROW ===== */
+        .voting-info-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 2.5rem auto 0;
+        }
+
+        .info-chip {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .info-chip-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .info-chip-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-chip-label {
             font-size: 0.65rem;
             color: var(--text-muted);
             letter-spacing: 0.1em;
-            margin-top: 0.3rem;
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
         }
 
-        /* Teaser Character section */
-        .teaser-characters {
-            margin-top: 3rem;
-        }
-
-        .teaser-title {
-            font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
-        }
-
-        .teaser-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 1.5rem;
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        .teaser-thumb {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .teaser-img-wrapper {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--glass-border);
-            margin-bottom: 0.75rem;
-            background: #0f0f23;
-        }
-
-        .teaser-img-wrapper.rabbit {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px var(--accent-cyan-glow);
-        }
-
-        .teaser-img-wrapper.girl {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 15px rgba(255, 110, 199, 0.4);
-        }
-
-        .teaser-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: blur(4px) brightness(0.7); /* Blur before release */
-            transition: all 0.5s ease;
-        }
-
-        .unlocked .teaser-img {
-            filter: none;
-        }
-
-        .teaser-name {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        /* Unlocked Content Styles */
-        .content-unlocked-section {
-            display: none; /* Controlled via JS */
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .content-unlocked-section.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Characters Showcase Grid */
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .showcase-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .showcase-card {
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .showcase-img-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            overflow: hidden;
-            background: #0d0d22;
-        }
-
-        .showcase-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .showcase-card:hover .showcase-img {
-            transform: scale(1.04);
-        }
-
-        .showcase-desc-bar {
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid var(--glass-border);
-            text-align: center;
-        }
-
-        .showcase-char-name {
-            font-size: 1.1rem;
-            font-weight: 700;
+        .info-chip-value {
+            font-size: 0.9rem;
             color: var(--text-primary);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* ===== GALLERY SECTION ===== */
+        .gallery-section {
+            padding: 4rem 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: 0.05em;
         }
 
-        .showcase-char-role {
-            font-size: 0.8rem;
-            color: var(--accent-cyan);
-            font-family: 'Orbitron', sans-serif;
-            margin-top: 0.2rem;
-            letter-spacing: 0.1em;
-        }
-
-        /* T-shirt Sample Display */
-        .sample-section {
-            margin-bottom: 4rem;
-        }
-
-        .sample-card {
-            max-width: 850px;
-            margin: 0 auto;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-        }
-
-        .sample-img-container {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            background: #0f0f2b;
-            position: relative;
-        }
-
-        .sample-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .sample-card:hover .sample-img {
-            transform: scale(1.02);
-        }
-
-        .sample-note {
-            font-size: 0.8rem;
+        .section-sub {
             color: var(--text-muted);
-            margin-top: 0.75rem;
-            text-align: center;
-        }
-
-        /* Guidelines Styled Details */
-        .guidelines-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 4rem;
-        }
-
-        .guideline-item-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-md);
-            padding: 1.75rem;
-            display: flex;
-            gap: 1.25rem;
-            align-items: flex-start;
-            transition: all 0.3s ease;
-        }
-
-        .guideline-item-card:hover {
-            border-color: rgba(0, 243, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .guideline-icon {
-            font-size: 1.8rem;
-            line-height: 1;
-            filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.4));
-        }
-
-        .guideline-info h4 {
-            font-size: 1rem;
-            color: var(--accent-cyan);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .guideline-info p {
             font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .guideline-list {
-            list-style: none;
-            padding-left: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .guideline-list li {
-            position: relative;
-            padding-left: 1.25rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .guideline-list li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--accent-pink);
-            font-weight: 700;
-        }
-
-        /* Schedule Timeline */
-        .timeline-container {
-            margin-bottom: 4rem;
-        }
-
-        .timeline-steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            position: relative;
-            max-width: 900px;
-            margin: 3rem auto 0;
-        }
-
-        @media (max-width: 768px) {
-            .timeline-steps {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-            .timeline-steps::before {
-                display: none;
-            }
-        }
-
-        .timeline-steps::before {
-            content: "";
-            position: absolute;
-            top: 2rem;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
-            z-index: 0;
-        }
-
-        .timeline-step-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-md);
-            padding: 2rem 1.5rem;
             text-align: center;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            margin-bottom: 2.5rem;
         }
 
-        .timeline-step-card:hover {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 25px rgba(255, 110, 199, 0.15);
-            transform: translateY(-4px);
-        }
-
-        .step-badge {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 50%;
-            background: var(--bg-surface);
-            border: 2px solid var(--accent-cyan);
-            box-shadow: 0 0 15px var(--accent-cyan-glow);
+        .drive-link-banner {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: -3.5rem auto 1.5rem;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--accent-cyan);
+            gap: 0.5rem;
+            margin-bottom: 2.5rem;
         }
 
-        .timeline-step-card:nth-child(2) .step-badge {
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 15px var(--accent-purple-glow);
-            color: var(--accent-purple);
-        }
-
-        .timeline-step-card:nth-child(3) .step-badge {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 15px rgba(255, 110, 199, 0.4);
-            color: var(--accent-pink);
-        }
-
-        .step-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.75rem;
-        }
-
-        .step-date {
-            font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--accent-gold);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-            margin-bottom: 0.5rem;
-        }
-
-        .step-time {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Action/Submission Section */
-        .submit-section {
-            max-width: 650px;
-            margin: 4rem auto 2rem;
-            text-align: center;
-        }
-
-        .submit-card {
-            padding: 3rem 2rem;
-            border: 2px solid var(--glass-border);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 35px var(--accent-cyan-glow);
-        }
-
-        .submit-card:hover {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 45px rgba(255, 110, 199, 0.3);
-        }
-
-        .submit-card h3 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        .submit-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .btn-submit-form {
-            display: inline-block;
-            padding: 1.1rem 3rem;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: #000;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px var(--accent-cyan-glow);
-            letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-submit-form:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 35px rgba(0, 243, 255, 0.6);
-            color: #fff;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
-        }
-
-        .btn-submit-form.preparing {
-            background: #222;
-            border: 1px solid #444;
-            color: #666;
-            box-shadow: none;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .submit-subinfo {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .submit-subinfo a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .submit-subinfo a:hover {
-            color: var(--accent-pink);
-            text-decoration: underline;
-        }
-
-        /* Back to Home Button */
-        .back-nav-container {
-            text-align: center;
-            margin: 4rem 0 2rem;
-        }
-
-        .btn-back-home {
+        .btn-drive {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
             color: var(--text-secondary);
+            font-size: 0.85rem;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            padding: 0.75rem 1.5rem;
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s;
         }
 
-        .btn-back-home:hover {
-            color: var(--accent-cyan);
+        .btn-drive:hover {
+            background: rgba(255, 255, 255, 0.1);
             border-color: var(--accent-cyan);
-            background: rgba(0, 243, 255, 0.05);
-            transform: translateX(-4px);
+            color: var(--accent-cyan);
+        }
+
+        /* ===== T-SHIRT CARDS GRID ===== */
+        .tshirt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tshirt-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.35s,
+                        box-shadow 0.35s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tshirt-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 243, 255, 0.35);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 243, 255, 0.1);
+        }
+
+        /* Entry Number Badge */
+        .entry-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            border-radius: 8px;
+            padding: 0.25rem 0.6rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Image Area */
+        .card-image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #0d0d22, #150a28);
+            overflow: hidden;
+        }
+
+        /* Google Drive thumbnail embed */
+        .card-image-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none;
+        }
+
+        .card-img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .card-img-placeholder-icon {
+            font-size: 3rem;
+            opacity: 0.4;
+        }
+
+        .card-img-placeholder-text {
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            opacity: 0.5;
+        }
+
+        /* Card Bottom */
+        .card-footer {
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            gap: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .btn-card-view {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            text-decoration: none;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+
+        .btn-card-view:hover {
+            background: rgba(0, 243, 255, 0.1);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* ===== STICKY VOTE BUTTON ===== */
+        .sticky-vote {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 2rem;
+            background: linear-gradient(135deg, #ff6ec7, #b025ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 8px 30px rgba(176, 37, 255, 0.5), 0 2px 8px rgba(0,0,0,0.4);
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            animation: floatBtn 3s ease-in-out infinite;
+        }
+
+        .sticky-vote.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @keyframes floatBtn {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-4px); }
+        }
+
+        .sticky-vote:hover {
+            box-shadow: 0 12px 40px rgba(176, 37, 255, 0.7);
+        }
+
+        /* ===== RESULT SECTION ===== */
+        .result-info {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .result-info-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-info-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .result-highlight {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        /* ===== PRIZE INFO ===== */
+        .prize-section {
+            max-width: 640px;
+            margin: 2rem auto;
+        }
+
+        .prize-card {
+            background: linear-gradient(135deg,
+                rgba(255, 215, 0, 0.05),
+                rgba(176, 37, 255, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem 2rem;
+        }
+
+        .prize-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .prize-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .prize-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .prize-list li::before {
+            content: '✦';
+            color: var(--accent-gold);
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-overlay.open {
+            display: flex;
+        }
+
+        .lightbox-inner {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .lightbox-inner iframe {
+            width: 80vw;
+            height: 80vh;
+            max-width: 800px;
+            max-height: 800px;
+            border: none;
+            display: block;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 45, 85, 0.6);
+        }
+
+        .lightbox-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .tshirt-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            .voting-info-row {
+                grid-template-columns: 1fr;
+            }
+            .countdown-grid {
+                gap: 0.5rem;
+            }
+            .countdown-card {
+                padding: 0.75rem 0.9rem;
+                min-width: 58px;
+            }
+            .card-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .tshirt-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -595,376 +652,393 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar scrolled" id="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">AGM LIVE</a>
             <button class="nav-toggle" id="navToggle" aria-label="メニュー">
                 <span></span><span></span><span></span>
             </button>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html#home">HOME</a></li>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="tshirt-contest.html" style="color: var(--accent-gold); font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);">🗳️ 投票</a></li>
                 <li><a href="index.html#info">INFO</a></li>
                 <li><a href="index.html#timetable">TIMETABLE</a></li>
-                <li><a href="index.html#recruit">募集</a></li>
                 <li><a href="index.html#ticket">TICKET</a></li>
-                <li><a href="index.html#notes">注意事項</a></li>
                 <li><a href="index.html#contact">CONTACT</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Contest Landing Page -->
-    <main class="container">
-        
-        <!-- Locked/Teaser View -->
-        <section class="contest-hero" id="locked-view">
-            <div class="lock-container">
-                <div class="lock-icon">🔒</div>
-                <div class="update-badge">5月28日(木) 21:00 公開予定</div>
-                <h1 class="contest-title-glowing">T-SHIRT CONTEST</h1>
-                <p class="contest-subtitle">ライブTシャツデザインコンテスト</p>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem;">特別ページの公開までしばらくお待ちください！</p>
-                
-                <!-- Countdown Clock -->
+    <!-- Hero Section -->
+    <section class="contest-hero" id="home">
+        <div class="container">
+            <div class="phase-badge">
+                <span class="phase-dot"></span>
+                VOTING NOW OPEN
+            </div>
+
+            <h1 class="contest-title-glowing">
+                Tシャツデザイン<br>投票受付中！
+            </h1>
+            <p class="contest-subtitle">
+                AI GENERATION MUSIC LIVE vol.1 in GINZA<br>
+                公式Tシャツコンテスト
+            </p>
+
+            <!-- Deadline Countdown -->
+            <div class="deadline-section">
+                <div class="deadline-label">⏰ 投票期間終了まで</div>
                 <div class="countdown-grid">
                     <div class="countdown-card">
-                        <span class="countdown-num" id="days">00</span>
-                        <span class="countdown-label">DAYS</span>
+                        <span class="countdown-num" id="cd-days">--</span>
+                        <span class="countdown-lbl">DAYS</span>
                     </div>
                     <div class="countdown-card">
-                        <span class="countdown-num" id="hours">00</span>
-                        <span class="countdown-label">HOURS</span>
+                        <span class="countdown-num" id="cd-hours">--</span>
+                        <span class="countdown-lbl">HOURS</span>
                     </div>
                     <div class="countdown-card">
-                        <span class="countdown-num" id="minutes">00</span>
-                        <span class="countdown-label">MINUTES</span>
+                        <span class="countdown-num" id="cd-mins">--</span>
+                        <span class="countdown-lbl">MINS</span>
                     </div>
                     <div class="countdown-card">
-                        <span class="countdown-num" id="seconds">00</span>
-                        <span class="countdown-label">SECONDS</span>
-                    </div>
-                </div>
-
-                <!-- Teaser Section -->
-                <div class="teaser-characters">
-                    <h3 class="teaser-title">— CHARACTER TEASER —</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-                        公式キャラクター「レインボーバニー」＆「レインボーガール」公開中！
-                    </p>
-                    <div class="teaser-grid">
-                        <div class="teaser-thumb">
-                            <div class="teaser-img-wrapper rabbit">
-                                <img src="contest-rabbit.jpg" class="teaser-img" alt="レインボーバニー">
-                            </div>
-                            <span class="teaser-name">レインボーバニー</span>
-                        </div>
-                        <div class="teaser-thumb">
-                            <div class="teaser-img-wrapper girl">
-                                <img src="contest-girl.jpg" class="teaser-img" alt="レインボーガール">
-                            </div>
-                            <span class="teaser-name">レインボーガール</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="back-nav-container">
-                <a href="index.html" class="btn-back-home">← イベントトップに戻る</a>
-            </div>
-        </section>
-
-        <!-- Unlocked View -->
-        <section class="contest-hero content-unlocked-section" id="unlocked-view">
-            <div class="contest-header">
-                <div class="update-badge">5月28日(木) 21:00 更新</div>
-                <h1 class="contest-title-glowing">T-SHIRT DESIGN CONTEST</h1>
-                <p class="contest-subtitle">ライブTシャツ デザインコンテスト</p>
-                <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto; line-height: 1.8;">
-                    『AI GENERATION MUSIC LIVE Vol.1 in GINZA』開催を記念して、オフィシャルTシャツのデザインコンテストを開催します！<br>
-                    あなたのデザインがオフィシャルグッズとして商品化！さらに上位3作品に選ばれた方には豪華特典も！たくさんのご応募をお待ちしております。
-                </p>
-            </div>
-
-            <!-- Mascot Showcase -->
-            <h2 class="section-title" style="margin-top: 5rem; margin-bottom: 2rem;">OFFICIAL MASCOTS</h2>
-            <p class="section-subtitle">デザインに自由に取り入れられる公式キャラクターたちです。</p>
-            <div class="showcase-grid">
-                <!-- Mascot 1: Rabbit -->
-                <div class="showcase-card glass">
-                    <div class="showcase-img-container">
-                        <img src="contest-rabbit.jpg" class="showcase-img" alt="レインボーバニー">
-                    </div>
-                    <div class="showcase-desc-bar">
-                        <div class="showcase-char-name">レインボーバニー</div>
-                        <div class="showcase-char-role">Official Mascot</div>
-                    </div>
-                </div>
-
-                <!-- Mascot 2: Girl -->
-                <div class="showcase-card glass">
-                    <div class="showcase-img-container">
-                        <img src="contest-girl.jpg" class="showcase-img" alt="レインボーガール">
-                    </div>
-                    <div class="showcase-desc-bar">
-                        <div class="showcase-char-name">レインボーガール</div>
-                        <div class="showcase-char-role">Official Character</div>
+                        <span class="countdown-num" id="cd-secs">--</span>
+                        <span class="countdown-lbl">SECS</span>
                     </div>
                 </div>
             </div>
 
-            <!-- T-Shirt Mockup -->
-            <div class="sample-section">
-                <h2 class="section-title">OFFICIAL T-SHIRT IMAGE</h2>
-                <p class="section-subtitle">オフィシャルTシャツの完成イメージです。</p>
-                <div class="sample-card glass">
-                    <div class="sample-img-container">
-                        <img src="contest-tshirt.jpg" class="sample-img" alt="Tシャツ着用イメージ">
-                    </div>
-                </div>
-                <p class="sample-note">※デザインの配置やボディサイズはイメージです。実際とは異なる場合があります。</p>
+            <!-- Main Vote CTA -->
+            <div class="vote-cta-section">
+                <a href="https://forms.gle/HKRL4RQkPNdNkoJa9"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn-vote-main"
+                   id="mainVoteBtn">
+                    <span class="vote-icon">🗳️</span>
+                    投票フォームはこちら
+                </a>
+                <p class="vote-note">最大3作品まで選べます｜どなたでも投票できます</p>
             </div>
 
-            <!-- Guidelines Grid -->
-            <h2 class="section-title" style="margin-top: 5rem;">APPLICATION GUIDELINES</h2>
-            <p class="section-subtitle">応募要項をご確認のうえ、デザインを作成してください。</p>
-            <div class="guidelines-grid">
-                
-                <div class="guideline-item-card">
-                    <div class="guideline-icon">🎨</div>
-                    <div class="guideline-info">
-                        <h4>Tシャツ仕様</h4>
-                        <ul class="guideline-list">
-                            <li><strong>Tシャツの色</strong>: 白 または 黒</li>
-                            <li><strong>プリント場所</strong>: 表面 または 背面（どちらか一方のみ）</li>
-                        </ul>
+            <!-- Info Chips -->
+            <div class="voting-info-row">
+                <div class="info-chip">
+                    <span class="info-chip-icon">📅</span>
+                    <div class="info-chip-text">
+                        <span class="info-chip-label">投票期間</span>
+                        <span class="info-chip-value">7/15（水）0:00〜<br>7/31（金）23:59</span>
                     </div>
                 </div>
-
-                <div class="guideline-item-card">
-                    <div class="guideline-icon">📐</div>
-                    <div class="guideline-info">
-                        <h4>デザイン規定</h4>
-                        <ul class="guideline-list">
-                            <li><strong>デザインサイズ</strong>: アスペクト比 3:4 以内（縦長デザインのみ）</li>
-                            <li><strong>線の太さ</strong>: 2pt以上推奨</li>
-                            <li>手描き・デジタルどちらでも可</li>
-                        </ul>
+                <div class="info-chip">
+                    <span class="info-chip-icon">🏆</span>
+                    <div class="info-chip-text">
+                        <span class="info-chip-label">採用数</span>
+                        <span class="info-chip-value">上位3作品を<br>公式Tシャツに採用</span>
                     </div>
                 </div>
-
-                <div class="guideline-item-card">
-                    <div class="guideline-icon">✍️</div>
-                    <div class="guideline-info">
-                        <h4>応募条件 & 記載項目</h4>
-                        <ul class="guideline-list">
-                            <li>応募者オリジナルの作品に限ります。</li>
-                            <li>作者名（ペンネーム・SNSハンドルネーム可）をデザインの<strong>右下に小さく記載</strong>してください。</li>
-                            <li>応募はお一人につき<strong>1点まで</strong>となります。</li>
-                        </ul>
+                <div class="info-chip">
+                    <span class="info-chip-icon">📣</span>
+                    <div class="info-chip-text">
+                        <span class="info-chip-label">結果発表</span>
+                        <span class="info-chip-value">8/1（土）プレライブ＆<br>公式Xアカウントにて</span>
                     </div>
                 </div>
-
-                <div class="guideline-item-card">
-                    <div class="guideline-icon">🏆</div>
-                    <div class="guideline-info">
-                        <h4>採用数 & 特典</h4>
-                        <p><strong>採用数：3デザイン</strong></p>
-                        <ul class="guideline-list" style="margin-top: 0.25rem;">
-                            <li>応募作品の中から上位3作品を<strong>一般投票にて決定</strong>し、公式オフィシャルTシャツとして正式採用！</li>
-                            <li>採用されたクリエイターの皆様には、<strong>完成したご自身のデザインTシャツを1枚プレゼント</strong>いたします！</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="guideline-item-card">
-                    <div class="guideline-icon">📦</div>
-                    <div class="guideline-info">
-                        <h4>Tシャツの販売方法</h4>
-                        <p>完成したTシャツは<strong>完全受注生産</strong>にて販売いたします。</p>
-                        <ul class="guideline-list" style="margin-top: 0.25rem;">
-                            <li>ライブ来場者：イベント会場にて直接受取り可能</li>
-                            <li>ご来場できない方：オンライン通販にて発送可能（※送料は別途発生いたします）</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Schedule Timeline -->
-            <div class="timeline-container">
-                <h2 class="section-title">CONTEST SCHEDULE</h2>
-                <p class="section-subtitle">コンテストのスケジュール日程です。</p>
-                <div class="timeline-steps">
-                    
-                    <div class="timeline-step-card">
-                        <div class="step-badge">01</div>
-                        <h4 class="step-title">応募締切</h4>
-                        <div class="step-date">2026.7.12<span>(日)</span></div>
-                        <div class="step-time">23:59 まで</div>
-                    </div>
-
-                    <div class="timeline-step-card">
-                        <div class="step-badge">02</div>
-                        <h4 class="step-title">投票期間</h4>
-                        <div class="step-date">7.15<span>(火)</span> 〜 7.31<span>(木)</span></div>
-                        <div class="step-time">一般ウェブ投票にて決定</div>
-                    </div>
-
-                    <div class="timeline-step-card">
-                        <div class="step-badge">03</div>
-                        <h4 class="step-title">結果発表</h4>
-                        <div class="step-date">2026.8.7<span>(金)</span></div>
-                        <div class="step-time">ホームページ・公式Xにて公開</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Application Form -->
-            <div class="submit-section">
-                <div class="submit-card glass">
-                    <h3>SUBMIT YOUR DESIGN</h3>
-                    <p>
-                        デザインコンテストの応募受付を開始しました！<br>
-                        下記の応募フォーム（Google フォーム）より、必要事項をご入力の上ご応募ください。
-                    </p>
-                    <a href="https://forms.gle/K6q1oBjbMEssL8jQ7" target="_blank" class="btn-submit-form">デザインを応募する (Google フォーム)</a>
-                    <div class="submit-subinfo">
-                        公式Xアカウント（<a href="https://x.com/AGML_official" target="_blank">@AGML_official</a>）のDMでも引き続きデザインのご応募・受付を行っております。<br>
-                        お問い合わせ等もお気軽にご連絡ください！
-                    </div>
-                </div>
-            </div>
-
-            <div class="back-nav-container">
-                <a href="index.html" class="btn-back-home">← イベントトップに戻る</a>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" style="margin-top: 5rem;">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>AI GENERATION MUSIC LIVE</h3>
-                    <p>Vol.1 in GINZA</p>
-                </div>
-                <div class="footer-links">
-                    <a href="index.html#home">HOME</a>
-                    <a href="index.html#info">INFO</a>
-                    <a href="index.html#timetable">TIMETABLE</a>
-                    <a href="index.html#recruit">募集</a>
-                    <a href="index.html#notes">注意事項</a>
-                </div>
-                <div class="footer-credit">
-                    <p>Presented by Coedo Music Labo & Queen Sighs</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 AI GENERATION MUSIC LIVE. All rights reserved.</p>
             </div>
         </div>
-    </footer>
+    </section>
 
-    <!-- Countdown & Unlock Timer Script -->
+    <!-- Gallery Section -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <div class="section-heading">
+                <p class="section-title-text">14 ENTRIES</p>
+            </div>
+            <p class="section-sub">
+                全作品を確認して、気に入った作品に投票しよう！<br>
+                カードをタップすると大きく表示できます
+            </p>
+
+            <!-- Drive Link -->
+            <div class="drive-link-banner">
+                <a href="https://drive.google.com/drive/folders/100fa8Iy05OMHiWSHznRkDLHdG9Icqxbb?usp=drive_link"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn-drive">
+                    📁 Google Driveで全画像を見る（高解像度）
+                </a>
+            </div>
+
+            <!-- T-shirt Grid -->
+            <div class="tshirt-grid" id="tshirtGrid">
+                <!-- Cards will be injected by JS -->
+            </div>
+
+            <!-- Prize Info -->
+            <div class="prize-section">
+                <div class="prize-card">
+                    <div class="prize-title">🎁 採用者への特典</div>
+                    <ul class="prize-list">
+                        <li>上位3作品の作者に実物Tシャツをプレゼント！</li>
+                        <li>後日、予約限定販売（予価 3,500円 ＋ 送料）</li>
+                        <li>購入者には 10/10 ライブ or 次回開催で使える 500円飲食チケットのおまけ付き</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Result Info -->
+            <div class="result-info">
+                <div class="result-info-title">📊 RESULT ANNOUNCEMENT</div>
+                <p class="result-info-text">
+                    投票数が最も多い <span class="result-highlight">上位3作品</span> を公式ライブTシャツとして採用します。<br>
+                    結果は <span class="result-highlight">8月1日（土）</span> のプレライブ内および、<br>
+                    ライブ後に公式Xアカウントにて発表します。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Vote Button -->
+    <a href="https://forms.gle/HKRL4RQkPNdNkoJa9"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="sticky-vote"
+       id="stickyVote">
+        🗳️ 投票する
+    </a>
+
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-inner" id="lightboxInner">
+            <button class="lightbox-close" onclick="closeLightbox(null, true)">✕</button>
+            <iframe id="lightboxFrame" src="" allowfullscreen></iframe>
+            <div class="lightbox-title" id="lightboxTitle"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Target release JST: 2026-05-28 21:00:00 JST (GMT+0900)
-            const targetReleaseTime = new Date('2026-05-28T21:00:00+09:00').getTime();
-            
-            const lockedView = document.getElementById('locked-view');
-            const unlockedView = document.getElementById('unlocked-view');
-            
-            const daysEl = document.getElementById('days');
-            const hoursEl = document.getElementById('hours');
-            const minutesEl = document.getElementById('minutes');
-            const secondsEl = document.getElementById('seconds');
+        // ===== COUNTDOWN TIMER =====
+        const deadline = new Date('2026-07-31T23:59:00+09:00');
 
-            // Check if preview mode is requested via URL query string (?preview=true or ?test=true)
-            const urlParams = new URLSearchParams(window.location.search);
-            const isPreview = urlParams.get('preview') === 'true' || urlParams.get('test') === 'true';
+        function updateCountdown() {
+            const now = new Date();
+            const diff = deadline - now;
 
-            function updateTimer() {
-                const now = Date.now();
-                const timeRemaining = targetReleaseTime - now;
-
-                if (isPreview || timeRemaining <= 0) {
-                    // Unlock page
-                    lockedView.style.display = 'none';
-                    unlockedView.classList.add('show');
-                    
-                    // Unblur teaser images
-                    document.querySelectorAll('.teaser-img').forEach(img => {
-                        img.style.filter = 'none';
-                    });
-                    
-                    clearInterval(timerInterval);
-                    return;
-                }
-
-                // Calculate time units
-                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-                // Format with leading zeros
-                daysEl.textContent = String(days).padStart(2, '0');
-                hoursEl.textContent = String(hours).padStart(2, '0');
-                minutesEl.textContent = String(minutes).padStart(2, '0');
-                secondsEl.textContent = String(seconds).padStart(2, '0');
+            if (diff <= 0) {
+                document.getElementById('cd-days').textContent = '00';
+                document.getElementById('cd-hours').textContent = '00';
+                document.getElementById('cd-mins').textContent = '00';
+                document.getElementById('cd-secs').textContent = '00';
+                document.getElementById('mainVoteBtn').textContent = '投票は終了しました';
+                document.getElementById('mainVoteBtn').style.pointerEvents = 'none';
+                document.getElementById('mainVoteBtn').style.opacity = '0.5';
+                return;
             }
 
-            // Start countdown polling
-            const timerInterval = setInterval(updateTimer, 1000);
-            updateTimer(); // Initial call
+            const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').textContent  = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-mins').textContent  = String(mins).padStart(2, '0');
+            document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // ===== STICKY VOTE BUTTON VISIBILITY =====
+        const stickyBtn = document.getElementById('stickyVote');
+        window.addEventListener('scroll', () => {
+            const heroBottom = document.querySelector('.contest-hero').getBoundingClientRect().bottom;
+            if (heroBottom < 0) {
+                stickyBtn.classList.add('visible');
+            } else {
+                stickyBtn.classList.remove('visible');
+            }
         });
 
-        // Toggle navigation menu on mobile
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-        
-        if (navToggle && navMenu) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                navToggle.classList.toggle('active');
-            });
-            
-            document.querySelectorAll('.nav-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
-                    navToggle.classList.remove('active');
-                });
+        // ===== T-SHIRT CARDS DATA =====
+        // Tシャツプレビュー画像のGoogle Drive File IDを設定してください
+        // ファイルIDは Google Driveでファイルを右クリック→「リンクを取得」で確認できます
+        // 形式: https://drive.google.com/file/d/FILE_ID/view
+        // ここでは作品番号01〜14のプレースホルダーを設定しています
+        // 実際のFile IDに差し替えてください
+
+        // Tシャツプレビュー（_T.png）と実画像（.png）のGoogle Drive File ID
+        // driveFileId: Tシャツプレビュー画像
+        // driveFileRawId: 実画像（細かいデザインも確認できる）
+        const entries = [
+            {
+                num: '01', title: 'No.01 HIROMI',
+                driveFileId: '1c4oEGxaIB7UUfvBEjYMScCWqceDdB2Cu',
+                driveFileTshirtId: '1c4oEGxaIB7UUfvBEjYMScCWqceDdB2Cu',
+                driveFileRawId: '1Y8WANR5WMlE0aAAuS3bKHmTMt0IeftU0'
+            },
+            {
+                num: '02', title: 'No.02 Jackpot031',
+                driveFileId: '1phd9lYZFRTinh-c8VJcIEGVYXIqI4CY-',
+                driveFileTshirtId: '1phd9lYZFRTinh-c8VJcIEGVYXIqI4CY-',
+                driveFileRawId: '1gsUJfCKm1PvU8JamAC1VULP4bI_3q82h'
+            },
+            {
+                num: '03', title: 'No.03 kaeru',
+                driveFileId: '1wv4wT-zh0qgbcyjYS8LQeeDBDaAy4fSV',
+                driveFileTshirtId: '1wv4wT-zh0qgbcyjYS8LQeeDBDaAy4fSV',
+                driveFileRawId: '1Ov3ViyRGWsKkLnVWiAvInCylMT7fdzSr'
+            },
+            {
+                num: '04', title: 'No.04 MakotoAI',
+                driveFileId: '1ED0uSzLOOk-kq3m4-ajzfbdwH7SM1942',
+                driveFileTshirtId: '1ED0uSzLOOk-kq3m4-ajzfbdwH7SM1942',
+                driveFileRawId: '1dQ-Hz9eTdU0gHoK5Go_PiT7OaNjNSsV5'
+            },
+            {
+                num: '05', title: 'No.05 茶トラ',
+                driveFileId: '1xxb_g8a5GtEdx3Oyf3kGNfCLWLiIl5wS',
+                driveFileTshirtId: '1xxb_g8a5GtEdx3Oyf3kGNfCLWLiIl5wS',
+                driveFileRawId: '19DdxbjjL7QrThmOOeOK0MHWb_69AMI5a'
+            },
+            {
+                num: '06', title: 'No.06 RYU_GiN',
+                driveFileId: '1onpnIM8mYTVum1-DVjoIxxy1G0tHUHaw',
+                driveFileTshirtId: '1onpnIM8mYTVum1-DVjoIxxy1G0tHUHaw',
+                driveFileRawId: '1qEmYHGPhUb5x7ju9EjoITNlexFHSZMSu'
+            },
+            {
+                num: '07', title: 'No.07 Semicolon北村',
+                driveFileId: '1gTO-B-kO_Z6wlJ53Wkl3NGwDQ2mxEkiv',
+                driveFileTshirtId: '1gTO-B-kO_Z6wlJ53Wkl3NGwDQ2mxEkiv',
+                driveFileRawId: '1US3Whmtu9vUFKh3IfRF-QlQ3IYANDJyk'
+            },
+            {
+                num: '08', title: 'No.08 Luna☁Elack',
+                driveFileId: '16cAmfmswO0lFKyCX9uT0t6tdkyMHwNv0',
+                driveFileTshirtId: '16cAmfmswO0lFKyCX9uT0t6tdkyMHwNv0',
+                driveFileRawId: '1D6PI_TqMZnZ4_khJX2b3VdJHlocOgcX4'
+            },
+            {
+                num: '09', title: 'No.09 Strix8',
+                driveFileId: '1mRQc5LJxPqxvOLuC3DCMd9UYVF-I45CO',
+                driveFileTshirtId: '1mRQc5LJxPqxvOLuC3DCMd9UYVF-I45CO',
+                driveFileRawId: '1D27IWifQ2RsSMv8aJ7wU_Z2D0N9AFnJt'
+            },
+            {
+                num: '10', title: 'No.10 アチュ・カラノネコ',
+                driveFileId: '1FPY4JsuiYGrNh5kn8DZ2mDqNTrY1qc6U',
+                driveFileTshirtId: '1FPY4JsuiYGrNh5kn8DZ2mDqNTrY1qc6U',
+                driveFileRawId: '1pCGOfcVs1Mk_5S-C7N_3q8nWzyPsPE-T'
+            },
+            {
+                num: '11', title: 'No.11 真琴愛',
+                driveFileId: '1FesDvaIeJUyzBq6jdFaGNRQPcmlMQjjm',
+                driveFileTshirtId: '1FesDvaIeJUyzBq6jdFaGNRQPcmlMQjjm',
+                driveFileRawId: '1j4GBcQ4neCohQDawvmrnt94y-f9TF_05'
+            },
+            {
+                num: '12', title: 'No.12 でんでろ3',
+                driveFileId: '1AKum_hEpon-GjX9wIofpdnme1DI1wByM',
+                driveFileTshirtId: '1AKum_hEpon-GjX9wIofpdnme1DI1wByM',
+                driveFileRawId: '1ILRFDmk1U69ySPmnt0cgtmee9FB7X01c'
+            },
+            {
+                num: '13', title: 'No.13 Bianca',
+                driveFileId: '1BsV3NX1YM-SYkm7HFKfSnqRQv_sB97Ea',
+                driveFileTshirtId: '1BsV3NX1YM-SYkm7HFKfSnqRQv_sB97Ea',
+                driveFileRawId: '1-Jxvs4l5LWjEU3IllyGfmFG0KwJYEDvt'
+            },
+            {
+                num: '14', title: 'No.14 HMatsui',
+                driveFileId: '1uRlS10xwoUnegBcpXBrjaCYHEoZXtDY8',
+                driveFileTshirtId: '1uRlS10xwoUnegBcpXBrjaCYHEoZXtDY8',
+                driveFileRawId: '1XG0Qsm-MYkYOfQEWOZ4GUrbP_RZ33rKq'
+            },
+        ];
+
+        function buildDriveEmbedUrl(fileId) {
+            return `https://drive.google.com/file/d/${fileId}/preview`;
+        }
+
+        function buildDriveViewUrl(fileId) {
+            return `https://drive.google.com/file/d/${fileId}/view`;
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('tshirtGrid');
+            const folderUrl = 'https://drive.google.com/drive/folders/100fa8Iy05OMHiWSHznRkDLHdG9Icqxbb?usp=drive_link';
+
+            entries.forEach((entry, i) => {
+                const card = document.createElement('div');
+                card.className = 'tshirt-card';
+                card.setAttribute('data-index', i);
+
+                const hasId = entry.driveFileId;
+                const embedUrl = hasId ? buildDriveEmbedUrl(entry.driveFileId) : null;
+                const viewUrl = hasId ? buildDriveViewUrl(entry.driveFileId) : folderUrl;
+
+                // Tシャツプレビュー用と実画像用のURLを分ける（_T と 実画像）
+                const tshirtPreviewUrl = entry.driveFileTshirtId
+                    ? buildDriveEmbedUrl(entry.driveFileTshirtId)
+                    : embedUrl;
+
+                card.innerHTML = `
+                    <div class="entry-badge">No.${entry.num}</div>
+                    <div class="card-image-wrap" id="img-wrap-${i}">
+                        ${hasId
+                            ? `<iframe src="${tshirtPreviewUrl || embedUrl}" title="${entry.title} Tシャツプレビュー" loading="lazy"></iframe>`
+                            : `<div class="card-img-placeholder">
+                                <span class="card-img-placeholder-icon">👕</span>
+                                <span class="card-img-placeholder-text">No.${entry.num}</span>
+                               </div>`
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-title">${entry.title}</span>
+                        <div class="card-actions">
+                            ${entry.driveFileRawId
+                                ? `<a href="${buildDriveViewUrl(entry.driveFileRawId)}" target="_blank" rel="noopener" class="btn-card-view">🖼️ 実画像</a>`
+                                : ''
+                            }
+                            <a href="${viewUrl}" target="_blank" rel="noopener" class="btn-card-view">🔍 拡大</a>
+                        </div>
+                    </div>
+                `;
+
+                if (hasId) {
+                    card.querySelector('.card-image-wrap').addEventListener('click', () => {
+                        openLightbox(tshirtPreviewUrl || embedUrl, entry.title);
+                    });
+                }
+
+                grid.appendChild(card);
             });
         }
-    </script>
-    
-    <!-- Particles creation script -->
-    <script>
-        function createParticles() {
-            const container = document.getElementById('particles');
-            if (!container) return;
-            
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.style.cssText = `
-                    position: absolute;
-                    width: ${Math.random() * 3 + 1}px;
-                    height: ${Math.random() * 3 + 1}px;
-                    background: ${['rgba(255,45,85,0.4)', 'rgba(0,243,255,0.4)', 'rgba(176,37,255,0.4)', 'rgba(255,215,0,0.3)'][Math.floor(Math.random() * 4)]};
-                    border-radius: 50%;
-                    left: ${Math.random() * 100}%;
-                    top: ${Math.random() * 100}%;
-                    animation: particleDrift ${Math.random() * 20 + 15}s linear infinite;
-                    opacity: ${Math.random() * 0.6 + 0.2};
-                    pointer-events: none;
-                `;
-                container.appendChild(particle);
+
+        // ===== LIGHTBOX =====
+        function openLightbox(url, title) {
+            document.getElementById('lightboxFrame').src = url;
+            document.getElementById('lightboxTitle').textContent = title;
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(event, force) {
+            if (force || (event && event.target === document.getElementById('lightbox'))) {
+                document.getElementById('lightbox').classList.remove('open');
+                document.getElementById('lightboxFrame').src = '';
+                document.body.style.overflow = '';
             }
         }
-        createParticles();
+
+        // ESC key to close lightbox
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox(null, true);
+        });
+
+        renderCards();
     </script>
 </body>
 
